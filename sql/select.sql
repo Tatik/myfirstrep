@@ -1,0 +1,17 @@
+SELECT * FROM flights WHERE duration > 500;
+SELECT * FROM flights;
+SELECT * FROM flights WHERE destination = 'Paris' AND duration > 500;
+SELECT * FROM flights WHERE destination = 'Paris' OR duration > 500;
+SELECT AVG(duration) FROM flights;
+SELECT AVG(duration) FROM flights WHERE origin = 'New York';
+SELECT COUNT(*) FROM flights;
+SELECT COUNT(*) FROM flights where origin = 'New York';
+SELECT MIN(duration) FROM flights;
+SELECT * FROM flights WHERE origin IN ('New York', 'Lima');
+SELECT * FROM flights WHERE origin LIKE '%a%';
+SELECT * FROM flights LIMIT 2;
+SELECT * FROM flights ORDER BY duration ASC;
+SELECT * FROM flights ORDER BY duration ASC LIMIT 3;
+SELECT * FROM flights ORDER BY duration DESC LIMIT 3;
+SELECT origin, COUNT(*) FROM flights GROUP BY origin;
+SELECT origin, COUNT(*) FROM flights GROUP BY origin HAVING COUNT(*) > 1;
