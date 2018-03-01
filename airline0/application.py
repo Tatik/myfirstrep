@@ -6,7 +6,7 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 
 app = Flask(__name__)
 
-engine = create_engine('postgresql://plusbim:psqlSU@localhost:5432/plusbim') #os.getenv("DATABASE_URL")
+engine = create_engine ('postgresql://tamer:psqlSU@localhost:5432/tamer') #os.getenv("DATABASE_URL")
 db = scoped_session(sessionmaker(bind=engine))
 
 @app.route("/")
@@ -15,36 +15,21 @@ def index():
     flights = db.execute("SELECT id, origin, destination, duration FROM flights").fetchall()
     return render_template("index.html", flights=flights)
 
-@app.route("/book"):
+@app.route("/book", methods=["POST"])
+def book():
     """Book a flight."""
 
     # Get form information.
     name = request.form.get("name")
     try:
-        flight_id = int(request.form.get("flight_id"))
+        flight_id = request.form.get("flight_id")
+    except ValueError:
+        return render_template("error.html", message="Invalid flight number.")
 
-def main():
-    # List all flights
-    flights = db.execute("SELECT id, origin, destination, duration FROM flights").fetchall()
-    for flight in flights:
-        print(f"Flight {flight.id}: {flight.origin}: to {flight.destination}, {flight.duration} minutes.")
-
-    # Prompt user to choose a flight.
-    flight_id = int(input("\nFlight ID: "))
-    flight = db.execute("SELECT origin, destination, duration FROM flights WHERE id = :id", {"id": flight_id}).fetchone()
-
-    # Make Sure flight tis valid.
-    if flight is None:
-        print("Error: No such flight.")
-        return
-
-    # List passengers.
-    passengers = db.execute("SELECT name FROM passengers WHERE flight_id = :id",{"id": flight_id}).fetchall()
-    print("\nPassengers:")
-    for passenger in passengers:
-        print(passenger.name)
-    if len(passengers) == 0:
-        print("No passengers.")
-
-if __name__ == "__main__":
-    main()
+    # Make sure the flight exists.
+    if db.execute("SELECT * FROM flights WHERE id = :id", {"id": flight_id}).rowcount == 0:
+        return render_template("error.html", message="No such flight with that id.")
+    db.execute("INSERT INTO passengers (name, flight_id) VALUES (:name, :flight_id)",
+            {"name": name, "flight_id": flight_id})
+    db.commit()
+    return render_template("success.html")
