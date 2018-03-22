@@ -22,22 +22,37 @@ class Flight:
         print()
         print("Passengers:")
         for passenger in self.passengers:
-            print(f"{passenger.name})
-        
+            print(f"{passenger.name}")
+
 
     def delay(self, amount):
         self.duration += amount
+
+    def  add_passenger(self, p):
+        self.passengers.append(p)
+        p.flight_id = self.id
+
+
+class Passanger:
+
+    def __init__(self, name):
+        self.name = name
 
 def main():
 
     # Create flight.
     f1 = Flight(origin="New York", destination="Paris", duration=540)
-    f1.delay(10)
+
+    #create passengers.
+    alice = Passanger(name="Alice")
+    bob = Passanger(name="Bob")
+
+    #add passengers.
+    f1.add_passenger(alice)
+    f1.add_passenger(bob)
+
     f1.print_info()
 
-    f2 = Flight(origin="Tokyo", destination="Shangai", duration=185)
-    f2.delay(-10)
-    f2.print_info()
 
 if __name__ == "__main__":
     main()
