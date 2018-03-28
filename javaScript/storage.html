@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script>
+
+      // set starting value of counter to 0.
+      if(!localStorage.getItem("counter"))
+        localStorage.SetItem("counter","0");
+
+      // load current value of counter.
+
+      document.addEventListener('DOMContentLoaded', () => {
+        document.querySelector('#counter').innerHTML = localStorage.getItem('counter');
+
+        // Count every time button is clicked
+        document.querySelector('#button').onclick = () => {
+          // Increment current counter
+          let counter = localStorage.getItem('counter');
+          counter++;
+
+          // Update counter
+          document.querySelector('#counter').innerHTML = counter;
+          localStorage.SetItem('counter', counter);
+        }
+      });
+
+    </script>
+
+    <title>Web Sayfam</title>
+  </head>
+  <body>
+    <h1 id="counter">0</h1>
+    <button id="button"> Buraya tıkla </button>
+  </body>
+</html>
