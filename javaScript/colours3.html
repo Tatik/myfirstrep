@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+
+        // Change font color according to pressed button
+        document.querySelectorAll('.color-change').forEach(button => {
+          button.onclick = () => {
+          document.querySelector('#hello').style.color = button.dataset.color;
+        }
+        });
+      });
+    </script>
+
+    <title>Web Sayfam</title>
+  </head>
+  <body>
+    <h1 id="hello"> Merhaba, renk değişecek</h1>
+    <button class="color-change" data-color="red"> Kırmızı </button>
+    <button class="color-change" data-color="blue"> Mavi </button>
+    <button class="color-change" data-color="green"> Yeşil </button>
+
+  </body>
+</html>

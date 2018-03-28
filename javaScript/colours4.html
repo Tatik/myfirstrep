@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        document.querySelector('#new-task').onsubmit = ()=> {
+
+          // Creat new item for list
+          const li = document.createElement('li');
+          li.innerHTML = document.querySelector('#task').value;
+
+          // Add new item to the list
+          document.querySelector('#tasks').append(li);
+
+          // Clear input field
+          document.querySelector('#task').value ='';
+
+          // Stop form submitting
+          return false;
+        }
+      });
+    </script>
+
+    <title>Web Sayfam</title>
+  </head>
+  <body>
+    <h1> Görevler </h1>
+    <ul id="tasks">
+    </ul>
+    <form id="new-task">
+      <input id="task" autocomplete="off" autofocus placeholder="Yeni Görev" type="text">
+      <input type="submit">
+    </form>
+
+  </body>
+</html>
